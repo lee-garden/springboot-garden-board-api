@@ -1,4 +1,4 @@
-package domain.contents;
+package springboot.domain.contents;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

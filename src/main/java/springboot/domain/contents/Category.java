@@ -1,4 +1,4 @@
-package domain.contents;
+package springboot.domain.contents;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package springboot.domain.contents;
+package com.gardeny.gardenboard.springboot.domain.contents;
 
 import lombok.Builder;
 import lombok.Getter;

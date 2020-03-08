@@ -1,4 +1,4 @@
-package springboot.domain.contents;
+package com.gardeny.gardenboard.springboot.domain.contents;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -6,9 +6,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum Category {
-    NORMAL("normal", "일반 게시판"),
-    INFO("info", "정보 게시판"),
-    MARKET("market", "장터");
+    NORMAL("NORMAL", "일반 게시판"),
+    INFO("INFO", "정보 게시판"),
+    MARKET("MARKET", "장터 게시판");
 
     private final String key;
     private final String name;

@@ -1,4 +1,4 @@
-package com.gardeny.gardenboard.springboot.web.dto;
+package com.gardeny.gardenboard.springboot.web.contents.dto;
 
 import com.gardeny.gardenboard.springboot.domain.contents.Category;
 import com.gardeny.gardenboard.springboot.domain.contents.Post;

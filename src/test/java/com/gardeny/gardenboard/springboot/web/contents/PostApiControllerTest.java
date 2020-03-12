@@ -1,9 +1,9 @@
-package com.gardeny.gardenboard.springboot.web;
+package com.gardeny.gardenboard.springboot.web.contents;
 
 import com.gardeny.gardenboard.springboot.domain.contents.Category;
 import com.gardeny.gardenboard.springboot.domain.contents.Post;
 import com.gardeny.gardenboard.springboot.domain.contents.PostRepository;
-import com.gardeny.gardenboard.springboot.web.dto.PostSaveRequestDto;
+import com.gardeny.gardenboard.springboot.web.contents.dto.PostSaveRequestDto;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;

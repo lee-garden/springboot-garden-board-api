@@ -64,4 +64,9 @@ public class PostApiControllerTest {
         assertThat(all.get(0).getCategory()).isEqualTo(category);
         assertThat(all.get(0).getContent()).isEqualTo(content);
     }
+
+    @Test
+    public void Post_list() throws Exception {
+
+    }
 }

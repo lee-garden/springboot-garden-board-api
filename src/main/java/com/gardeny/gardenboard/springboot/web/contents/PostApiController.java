@@ -3,13 +3,11 @@ package com.gardeny.gardenboard.springboot.web.contents;
 import com.gardeny.gardenboard.springboot.service.contents.PostService;
 import com.gardeny.gardenboard.springboot.web.contents.dto.PostListResponseDto;
 import com.gardeny.gardenboard.springboot.web.contents.dto.PostSaveRequestDto;
+import com.gardeny.gardenboard.springboot.web.contents.dto.PostUpdateRequestDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +28,12 @@ public class PostApiController {
     @GetMapping("/api/v1/post")
     public List<PostListResponseDto> list() {
         return postService.findAllDesc();
+    }
+
+    @ApiOperation(value = "포스트 수정 API")
+    @PutMapping("api/v1/post/{id}")
+    public Long update(@PathVariable Long id, @RequestBody PostUpdateRequestDto requestDto) {
+        return postService.update(id, requestDto);
     }
 
 }

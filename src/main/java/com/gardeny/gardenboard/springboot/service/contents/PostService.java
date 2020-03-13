@@ -1,8 +1,10 @@
 package com.gardeny.gardenboard.springboot.service.contents;
 
+import com.gardeny.gardenboard.springboot.domain.contents.Post;
 import com.gardeny.gardenboard.springboot.domain.contents.PostRepository;
 import com.gardeny.gardenboard.springboot.web.contents.dto.PostListResponseDto;
 import com.gardeny.gardenboard.springboot.web.contents.dto.PostSaveRequestDto;
+import com.gardeny.gardenboard.springboot.web.contents.dto.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,5 +27,15 @@ public class PostService {
         return postRepository.findAllDesc().stream()
                       .map(PostListResponseDto::new)
                       .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Long update(Long id, PostUpdateRequestDto requestDto) {
+        Post post = postRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("해당 포스트가 존재하지 않습니다. id : " + id));
+
+        post.update(requestDto.getTitle(), requestDto.getContent());
+
+        return id;
     }
 }

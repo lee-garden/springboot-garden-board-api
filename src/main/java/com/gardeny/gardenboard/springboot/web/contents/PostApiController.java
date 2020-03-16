@@ -36,4 +36,10 @@ public class PostApiController {
         return postService.update(id, requestDto);
     }
 
+    @ApiOperation(value = "포스트 삭제 API")
+    @DeleteMapping("api/v1/post/{id}")
+    public Long delete(@PathVariable Long id) {
+        return postService.delete(id);
+    }
+
 }

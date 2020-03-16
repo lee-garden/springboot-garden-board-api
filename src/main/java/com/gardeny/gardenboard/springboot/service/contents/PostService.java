@@ -38,4 +38,14 @@ public class PostService {
 
         return id;
     }
+
+    @Transactional
+    public Long delete(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("해당 포스트가 존재하지 않습니다. id : " + id));
+
+        // todo : is_removed True 처리
+
+        return id;
+    }
 }

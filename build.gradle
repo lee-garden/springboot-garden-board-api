@@ -31,6 +31,9 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.4.1'
 
+    compile("org.springframework.boot:spring-boot-starter-security")
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
     compile('io.springfox:springfox-swagger2:2.9.2')
     compile('io.springfox:springfox-swagger-ui:2.9.2')
 

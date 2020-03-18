@@ -15,13 +15,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Response signup(SingUpRequestDto requestDto) {
-        User user = userRepository.save(requestDto.toEntity());
-        System.out.println("");
-        return Response.builder()
-                .success(true)
-                .status_code(201)
-                .msg("회원가입 성공")
-                .build();
+    public Long signup(SingUpRequestDto requestDto) {
+        return userRepository.save(requestDto.toEntity()).getId();
     }
 }

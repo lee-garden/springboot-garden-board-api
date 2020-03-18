@@ -20,58 +20,34 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional
-    public RetrieveResponse<Long> save(PostSaveRequestDto requestDto) {
-        Long post_id = postRepository.save(requestDto.toEntity()).getId();
-
-        return RetrieveResponse.<Long>builder()
-                               .success(true)
-                               .status_code(200)
-                               .msg("")
-                               .data(post_id)
-                               .build();
+    public Long save(PostSaveRequestDto requestDto) {
+        return postRepository.save(requestDto.toEntity()).getId();
     }
 
     @Transactional(readOnly = true)
-    public ListResponse<PostListResponseDto> findAllDesc() {
-        List<PostListResponseDto> posts = postRepository.findAllDesc().stream()
-                    .map(PostListResponseDto::new)
-                    .collect(Collectors.toList());
-
-        return  ListResponse.<PostListResponseDto>builder()
-                            .success(true)
-                            .status_code(200)
-                            .msg("")
-                            .data(posts)
-                            .build();
+    public List<PostListResponseDto> findAllDesc() {
+        return postRepository.findAllDesc().stream()
+                .map(PostListResponseDto::new)
+                .collect(Collectors.toList());
     }
 
     @Transactional
-    public RetrieveResponse<Long> update(Long id, PostUpdateRequestDto requestDto) {
+    public Long update(Long id, PostUpdateRequestDto requestDto) {
         Post post = postRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 포스트가 존재하지 않습니다. id : " + id));
 
         post.update(requestDto.getTitle(), requestDto.getContent());
 
-        return RetrieveResponse.<Long>builder()
-                .success(true)
-                .status_code(200)
-                .msg("")
-                .data(id)
-                .build();
+        return post.getId();
     }
 
     @Transactional
-    public RetrieveResponse<Long> delete(Long id) {
+    public Long delete(Long id) {
         Post post = postRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 포스트가 존재하지 않습니다. id : " + id));
 
         // todo : is_removed True 처리
 
-        return RetrieveResponse.<Long>builder()
-                .success(true)
-                .status_code(200)
-                .msg("")
-                .data(id)
-                .build();
+        return post.getId();
     }
 }

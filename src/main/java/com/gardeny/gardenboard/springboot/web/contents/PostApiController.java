@@ -12,6 +12,8 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 public class PostApiController {
@@ -20,7 +22,7 @@ public class PostApiController {
 
     @ApiOperation(value = "포스트 생성 API")
     @PostMapping("/api/v1/post")
-    public RetrieveResponse<Long> save(
+    public Long save(
                      @ApiParam(value = "category : NORMAL | MARKET | INFO", required = false)
                      @RequestBody PostSaveRequestDto requestDto) {
         return postService.save(requestDto);
@@ -28,19 +30,19 @@ public class PostApiController {
 
     @ApiOperation(value = "포스트 리스트 API")
     @GetMapping("/api/v1/post")
-    public ListResponse<PostListResponseDto> list() {
+    public List<PostListResponseDto> list() {
         return postService.findAllDesc();
     }
 
     @ApiOperation(value = "포스트 수정 API")
     @PutMapping("api/v1/post/{id}")
-    public RetrieveResponse<Long> update(@PathVariable Long id, @RequestBody PostUpdateRequestDto requestDto) {
+    public Long update(@PathVariable Long id, @RequestBody PostUpdateRequestDto requestDto) {
         return postService.update(id, requestDto);
     }
 
     @ApiOperation(value = "포스트 삭제 API")
     @DeleteMapping("api/v1/post/{id}")
-    public RetrieveResponse<Long> delete(@PathVariable Long id) {
+    public Long delete(@PathVariable Long id) {
         return postService.delete(id);
     }
 

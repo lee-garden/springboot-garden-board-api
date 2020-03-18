@@ -18,8 +18,7 @@ public class UserApiController {
 
     @ApiOperation(value = "회원 가입 API")
     @PostMapping("/api/v1/signup")
-    public Response signup(@RequestBody SingUpRequestDto requestDto) {
-        System.out.println("url 요청 들어옴");
+    public Long signup(@RequestBody SingUpRequestDto requestDto) {
         return userService.signup(requestDto);
     }
 }

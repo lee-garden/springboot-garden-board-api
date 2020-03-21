@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@Builder
 @Getter
 @NoArgsConstructor
 @Entity
@@ -41,7 +40,6 @@ public class User implements UserDetails {
     private String phone;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
     private List<String> roles = new ArrayList<>();
 
     @Builder

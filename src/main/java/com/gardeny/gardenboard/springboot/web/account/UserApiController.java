@@ -1,6 +1,5 @@
 package com.gardeny.gardenboard.springboot.web.account;
 
-import com.gardeny.gardenboard.springboot.config.response.Response;
 import com.gardeny.gardenboard.springboot.service.account.UserService;
 import com.gardeny.gardenboard.springboot.web.account.dto.SingUpRequestDto;
 import io.swagger.annotations.ApiOperation;

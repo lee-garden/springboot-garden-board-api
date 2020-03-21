@@ -1,8 +1,5 @@
 package com.gardeny.gardenboard.springboot.web.contents;
 
-import com.gardeny.gardenboard.springboot.config.response.ListResponse;
-import com.gardeny.gardenboard.springboot.config.response.Response;
-import com.gardeny.gardenboard.springboot.config.response.RetrieveResponse;
 import com.gardeny.gardenboard.springboot.service.contents.PostService;
 import com.gardeny.gardenboard.springboot.web.contents.dto.PostListResponseDto;
 import com.gardeny.gardenboard.springboot.web.contents.dto.PostSaveRequestDto;

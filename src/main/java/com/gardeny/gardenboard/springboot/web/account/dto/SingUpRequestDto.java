@@ -7,14 +7,14 @@ import lombok.Getter;
 
 @Getter
 public class SingUpRequestDto {
-    private String email;
+    private String username;
     private String password;
     private String name;
     private String phone;
 
     @Builder
-    public SingUpRequestDto(String email, String password, String name, String phone){
-        this.email = email;
+    public SingUpRequestDto(String username, String password, String name, String phone){
+        this.username = username;
         this.password = password;
         this.name = name;
         this.phone = phone;
@@ -22,7 +22,7 @@ public class SingUpRequestDto {
 
     public User toEntity() {
         return User.builder()
-                .email(email)
+                .username(username)
                 .password(password)
                 .name(name)
                 .phone(phone)

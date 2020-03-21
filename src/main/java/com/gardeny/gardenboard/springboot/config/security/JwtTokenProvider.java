@@ -1,5 +1,6 @@
 package com.gardeny.gardenboard.springboot.config.security;
 
+import com.gardeny.gardenboard.springboot.domain.account.UserRepository;
 import com.gardeny.gardenboard.springboot.service.account.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -17,6 +18,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,9 +36,9 @@ public class JwtTokenProvider {
         this.secretKey = Base64.getEncoder().encodeToString(this.secretKey.getBytes());
     }
 
-    public String createToken(String userId) {
-        Claims claims = Jwts.claims().setSubject(userId);
-
+    public String createToken(String username, List<String> roles) {
+        Claims claims = Jwts.claims().setSubject(username);
+        claims.put("roles", roles);
         Date now = new Date();
 
         return Jwts.builder()
@@ -47,12 +49,12 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-//    public Authentication getAuthentication(String token) {
-//        UserDetails userDetails = userService.findById(this.getUserId(token));
-//        return new UsernamePasswordAuthenticationToken(userDetails, "". userDetails.getAuthorites());
-//    }
+    public Authentication getAuthentication(String token) {
+        UserDetails userDetails = userService.loadUserByUsername(this.getUsername(token));
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
 
-    public String getUserId(String token) {
+    public String getUsername(String token) {
         return Jwts.parser()
                 .setSigningKey(this.secretKey)
                 .parseClaimsJws(token)

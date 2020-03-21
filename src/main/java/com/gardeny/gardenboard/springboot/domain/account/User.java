@@ -15,6 +15,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
     @Column(length = 30, nullable = false)
     private String email;
 
@@ -28,10 +32,15 @@ public class User {
     private String phone;
 
     @Builder
-    public User(String email, String password, String name, String phone) {
+    public User(Role role, String email, String password, String name, String phone) {
+        this.role = role;
         this.email = email;
         this.password = password;
         this.name = name;
         this.phone = phone;
+    }
+
+    public String getRoleKey() {
+        return this.role.getKey();
     }
 }

@@ -5,6 +5,8 @@ import com.gardeny.gardenboard.springboot.domain.contents.Post;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.Collections;
+
 @Getter
 public class SingUpRequestDto {
     private String username;
@@ -26,6 +28,7 @@ public class SingUpRequestDto {
                 .password(password)
                 .name(name)
                 .phone(phone)
+                .roles(Collections.singletonList("USER"))
                 .build();
     }
 }

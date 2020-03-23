@@ -1,5 +1,6 @@
 package com.gardeny.gardenboard.springboot.service.account;
 
+import com.gardeny.gardenboard.springboot.config.exception.SignInFailedException;
 import com.gardeny.gardenboard.springboot.config.security.JwtTokenProvider;
 import com.gardeny.gardenboard.springboot.domain.account.User;
 import com.gardeny.gardenboard.springboot.domain.account.UserRepository;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +20,7 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username){
@@ -27,6 +30,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public Long signup(SingUpRequestDto requestDto) {
+        requestDto.setPassword(passwordEncoder.encode(requestDto.getPassword()));
         return userRepository.save(requestDto.toEntity()).getId();
     }
 
@@ -34,6 +38,10 @@ public class UserService implements UserDetailsService {
     public String signin(SignInRequestDto requestDto) {
         User user = userRepository.findByUsername(requestDto.getUsername()).orElseThrow(() ->
                 new UsernameNotFoundException("해당 유저가 존재 하지 않습니다."));
+
+        if(!passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
+            throw new SignInFailedException("이메일 또는 비밀번호가 틀렸습니다.");
+        }
 
         // todo : 토큰 유효성 검사 및 기한 지난 토큰 재 발급 처리
 

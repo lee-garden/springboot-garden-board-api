@@ -1,12 +1,13 @@
 package com.gardeny.gardenboard.springboot.web.account.dto;
 
 import com.gardeny.gardenboard.springboot.domain.account.User;
-import com.gardeny.gardenboard.springboot.domain.contents.Post;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collections;
 
+@Setter
 @Getter
 public class SingUpRequestDto {
     private String username;

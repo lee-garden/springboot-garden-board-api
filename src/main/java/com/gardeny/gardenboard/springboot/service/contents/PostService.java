@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,8 +32,7 @@ public class PostService {
 
     @Transactional
     public Long update(Long id, PostUpdateRequestDto requestDto) {
-        Post post = postRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("해당 포스트가 존재하지 않습니다. id : " + id));
+        Post post = postRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         post.update(requestDto.getTitle(), requestDto.getContent());
 
@@ -41,8 +41,7 @@ public class PostService {
 
     @Transactional
     public Long delete(Long id) {
-        Post post = postRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("해당 포스트가 존재하지 않습니다. id : " + id));
+        Post post = postRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         // todo : is_removed True 처리
 

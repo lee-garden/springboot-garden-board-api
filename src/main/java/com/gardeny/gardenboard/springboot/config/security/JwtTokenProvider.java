@@ -1,13 +1,11 @@
 package com.gardeny.gardenboard.springboot.config.security;
 
-import com.gardeny.gardenboard.springboot.domain.account.UserRepository;
 import com.gardeny.gardenboard.springboot.service.account.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,8 +18,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Component
 public class JwtTokenProvider {
     @Value("${jwt-secret}")
@@ -29,7 +26,7 @@ public class JwtTokenProvider {
 
     private long tokenValidTime = 1000L * 3600 * 24 * 30;
 
-    private UserService userService;
+    private final UserService userService;
 
     @PostConstruct
     protected void init() {

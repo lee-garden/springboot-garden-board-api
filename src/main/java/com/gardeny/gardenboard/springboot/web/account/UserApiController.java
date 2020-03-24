@@ -1,5 +1,7 @@
 package com.gardeny.gardenboard.springboot.web.account;
 
+import com.gardeny.gardenboard.springboot.config.security.JwtTokenProvider;
+import com.gardeny.gardenboard.springboot.domain.account.User;
 import com.gardeny.gardenboard.springboot.service.account.UserService;
 import com.gardeny.gardenboard.springboot.web.account.dto.SignInRequestDto;
 import com.gardeny.gardenboard.springboot.web.account.dto.SingUpRequestDto;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserApiController {
 
     private final UserService userService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @ApiOperation(value = "회원 가입 API")
     @PostMapping("/api/v1/signup")
@@ -25,6 +28,7 @@ public class UserApiController {
     @ApiOperation(value = "로그인 API")
     @PostMapping("/api/v1/signin")
     public String signin(@RequestBody SignInRequestDto requestDto) {
-        return userService.signin(requestDto);
+        User user = userService.signin(requestDto);
+        return jwtTokenProvider.createToken(String.valueOf(user.getId()), user.getRoles());
     }
 }

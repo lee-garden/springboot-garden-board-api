@@ -9,14 +9,14 @@ import java.util.Collections;
 
 @Setter
 @Getter
-public class SingUpRequestDto {
+public class SignUpRequestDto {
     private String username;
     private String password;
     private String name;
     private String phone;
 
     @Builder
-    public SingUpRequestDto(String username, String password, String name, String phone){
+    public SignUpRequestDto(String username, String password, String name, String phone){
         this.username = username;
         this.password = password;
         this.name = name;

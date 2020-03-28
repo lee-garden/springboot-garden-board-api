@@ -4,7 +4,7 @@ import com.gardeny.gardenboard.springboot.config.exception.SignInFailedException
 import com.gardeny.gardenboard.springboot.domain.account.User;
 import com.gardeny.gardenboard.springboot.domain.account.UserRepository;
 import com.gardeny.gardenboard.springboot.web.account.dto.SignInRequestDto;
-import com.gardeny.gardenboard.springboot.web.account.dto.SingUpRequestDto;
+import com.gardeny.gardenboard.springboot.web.account.dto.SignUpRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,7 +27,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public Long signup(SingUpRequestDto requestDto) {
+    public Long signup(SignUpRequestDto requestDto) {
         requestDto.setPassword(passwordEncoder.encode(requestDto.getPassword()));
         return userRepository.save(requestDto.toEntity()).getId();
     }

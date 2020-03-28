@@ -4,7 +4,7 @@ import com.gardeny.gardenboard.springboot.config.security.JwtTokenProvider;
 import com.gardeny.gardenboard.springboot.domain.account.User;
 import com.gardeny.gardenboard.springboot.service.account.UserService;
 import com.gardeny.gardenboard.springboot.web.account.dto.SignInRequestDto;
-import com.gardeny.gardenboard.springboot.web.account.dto.SingUpRequestDto;
+import com.gardeny.gardenboard.springboot.web.account.dto.SignUpRequestDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +21,7 @@ public class UserApiController {
 
     @ApiOperation(value = "회원 가입 API")
     @PostMapping("/api/v1/signup")
-    public Long signup(@RequestBody SingUpRequestDto requestDto) {
+    public Long signup(@RequestBody SignUpRequestDto requestDto) {
         return userService.signup(requestDto);
     }
 

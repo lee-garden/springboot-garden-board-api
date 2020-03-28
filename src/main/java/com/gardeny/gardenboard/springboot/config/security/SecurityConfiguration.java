@@ -25,13 +25,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // todo : why not anyRequest().hasRole("USER")
         http.httpBasic().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                     .authorizeRequests()
                         .antMatchers("/api/v1/signin", "/api/v1/signup").permitAll()
-                        .anyRequest().hasRole("USER")
+                        .anyRequest().authenticated()
                 .and()
                     .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                             UsernamePasswordAuthenticationFilter.class);

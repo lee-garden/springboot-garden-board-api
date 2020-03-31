@@ -1,25 +1,28 @@
 package com.gardeny.gardenboard.springboot.web.contents.dto;
 
+import com.gardeny.gardenboard.springboot.domain.account.User;
 import com.gardeny.gardenboard.springboot.domain.contents.Category;
 import com.gardeny.gardenboard.springboot.domain.contents.Post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class PostSaveRequestDto {
     private String title;
     private Category category;
     private String content;
-    private String author;
+    private User user;
 
     @Builder
-    public PostSaveRequestDto(String title, Category category, String content, String author) {
+    public PostSaveRequestDto(String title, Category category, String content, User user) {
         this.title = title;
         this.category = category;
         this.content = content;
-        this.author = author;
+        this.user = user;
     }
 
     public Post toEntity() {
@@ -27,7 +30,7 @@ public class PostSaveRequestDto {
                 .title(title)
                 .category(category)
                 .content(content)
-                .author(author)
+                .user(user)
                 .build();
     }
 

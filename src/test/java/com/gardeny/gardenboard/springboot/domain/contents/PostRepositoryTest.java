@@ -1,10 +1,12 @@
 package com.gardeny.gardenboard.springboot.domain.contents;
 
+import com.gardeny.gardenboard.springboot.domain.account.User;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -13,6 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@WithMockUser
 public class PostRepositoryTest {
 
     @Autowired
@@ -29,12 +32,13 @@ public class PostRepositoryTest {
         String title = "테스트 게시글";
         Category category = Category.NORMAL;
         String content = "테스트 본문";
+        User user = new User();
 
         postRepository.save(Post.builder()
                                 .title(title)
                                 .category(category)
                                 .content(content)
-                                .author("test@test.com")
+                                .user(user)
                                 .build());
 
         //when

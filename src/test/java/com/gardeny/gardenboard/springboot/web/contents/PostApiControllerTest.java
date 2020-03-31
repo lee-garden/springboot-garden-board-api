@@ -1,6 +1,9 @@
 package com.gardeny.gardenboard.springboot.web.contents;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gardeny.gardenboard.springboot.config.security.JwtTokenProvider;
+import com.gardeny.gardenboard.springboot.domain.account.User;
+import com.gardeny.gardenboard.springboot.domain.account.UserRepository;
 import com.gardeny.gardenboard.springboot.domain.contents.Category;
 import com.gardeny.gardenboard.springboot.domain.contents.Post;
 import com.gardeny.gardenboard.springboot.domain.contents.PostRepository;
@@ -21,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -41,12 +45,20 @@ public class PostApiControllerTest {
     private TestRestTemplate restTemplate;
 
     @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private WebApplicationContext context;
 
     private MockMvc mvc;
+    private User user;
+    private String token;
 
     @Before
     public void setup() {
@@ -54,6 +66,14 @@ public class PostApiControllerTest {
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
+
+        user = userRepository.save(User.builder().username("test")
+                                            .password("1234")
+                                            .name("garden")
+                                            .phone("")
+                                            .roles(Collections.singletonList("USER"))
+                                            .build());
+        token = jwtTokenProvider.createToken(String.valueOf(user.getId()), user.getRoles());
     }
 
     @After
@@ -72,13 +92,13 @@ public class PostApiControllerTest {
                                                 .title(title)
                                                 .category(category)
                                                 .content(content)
-                                                .author("author")
                                                 .build();
 
         String url = "http://localhost:" + port + "/api/v1/post";
-        
+
         //when
         mvc.perform(post(url)
+                .header("X-AUTH-TOKEN", token)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(new ObjectMapper().writeValueAsString(requestDto)))
                 .andExpect(status().isOk());
@@ -96,7 +116,7 @@ public class PostApiControllerTest {
         Post savedPosts = postRepository.save(Post.builder().title("title")
                 .category(Category.NORMAL)
                 .content("content")
-                .author("author")
+                .user(user)
                 .build());
 
         Long updateId = savedPosts.getId();
@@ -109,8 +129,6 @@ public class PostApiControllerTest {
                 .build();
 
         String url = "http://localhost:" + port + "api/v1/post/" + updateId;
-
-        HttpEntity<PostUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
 
         //when
         mvc.perform(put(url)

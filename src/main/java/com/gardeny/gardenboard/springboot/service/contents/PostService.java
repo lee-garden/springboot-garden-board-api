@@ -1,11 +1,14 @@
 package com.gardeny.gardenboard.springboot.service.contents;
 
+import com.gardeny.gardenboard.springboot.domain.account.User;
 import com.gardeny.gardenboard.springboot.domain.contents.Post;
 import com.gardeny.gardenboard.springboot.domain.contents.PostRepository;
 import com.gardeny.gardenboard.springboot.web.contents.dto.PostListResponseDto;
 import com.gardeny.gardenboard.springboot.web.contents.dto.PostSaveRequestDto;
 import com.gardeny.gardenboard.springboot.web.contents.dto.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,11 +23,15 @@ public class PostService {
 
     @Transactional
     public Long save(PostSaveRequestDto requestDto) {
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        requestDto.setUser(user);
         return postRepository.save(requestDto.toEntity()).getId();
     }
 
     @Transactional(readOnly = true)
     public List<PostListResponseDto> findAllDesc() {
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(user.getId());
         return postRepository.findAllDesc().stream()
                 .map(PostListResponseDto::new)
                 .collect(Collectors.toList());

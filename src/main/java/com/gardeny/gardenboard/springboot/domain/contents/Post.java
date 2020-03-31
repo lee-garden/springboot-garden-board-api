@@ -1,5 +1,6 @@
 package com.gardeny.gardenboard.springboot.domain.contents;
 
+import com.gardeny.gardenboard.springboot.domain.account.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,14 +26,16 @@ public class Post {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    private String author;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false, updatable = false)
+    private User user;
 
     @Builder
-    public Post(Category category, String title, String content, String author) {
+    public Post(Category category, String title, String content, User user) {
         this.category = category;
         this.title = title;
         this.content = content;
-        this.author = author;
+        this.user = user;
     }
 
     public void update(String title, String content) {

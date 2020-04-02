@@ -1,5 +1,6 @@
 package com.gardeny.gardenboard.springboot.domain.contents;
 
+import com.gardeny.gardenboard.springboot.domain.BaseTimeEntity;
 import com.gardeny.gardenboard.springboot.domain.account.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Post {
+public class Post extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

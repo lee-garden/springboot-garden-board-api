@@ -30,9 +30,15 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public List<PostListResponseDto> findAllDesc() {
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(user.getId());
         return postRepository.findAllDesc().stream()
+                .map(PostListResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostListResponseDto> findMyPost() {
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return postRepository.findByUser_idOrderByCreatedDesc(user.getId()).stream()
                 .map(PostListResponseDto::new)
                 .collect(Collectors.toList());
     }

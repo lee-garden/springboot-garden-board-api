@@ -27,9 +27,13 @@ public class PostApiController {
 
     @ApiOperation(value = "포스트 리스트 API")
     @GetMapping("/api/v1/post")
-    public List<PostListResponseDto> list() {
+    public List<PostListResponseDto> postList() {
         return postService.findAllDesc();
     }
+
+    @ApiOperation(value = "내가 쓴 포스트 리스트 API")
+    @GetMapping("/api/v1/post/my")
+    public List<PostListResponseDto> myPostList() { return postService.findMyPost(); }
 
     @ApiOperation(value = "포스트 수정 API")
     @PutMapping("api/v1/post/{id}")

@@ -1,6 +1,7 @@
 package com.gardeny.gardenboard.springboot.domain.account;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.gardeny.gardenboard.springboot.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor
 @Entity
-public class User implements UserDetails {
+public class User extends BaseTimeEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

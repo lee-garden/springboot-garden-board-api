@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -30,6 +31,13 @@ public class Post extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private User user;
+
+    @ManyToMany
+    @JoinTable(
+        name = "users_like",
+        joinColumns = @JoinColumn(name = "post_id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id"))
+    Set<User> likes;
 
     @Builder
     public Post(Category category, String title, String content, User user) {

@@ -2,6 +2,7 @@ package com.gardeny.gardenboard.springboot.domain.account;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gardeny.gardenboard.springboot.domain.BaseTimeEntity;
+import com.gardeny.gardenboard.springboot.domain.contents.Post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -39,6 +41,9 @@ public class User extends BaseTimeEntity implements UserDetails {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "likes")
+    Set<Post> likedPosts;
 
     @Builder
     public User(String username, String password, String name, String phone, List<String> roles) {

@@ -60,4 +60,22 @@ public class PostService {
 
         return post.getId();
     }
+
+    @Transactional
+    public boolean like(Long id) {
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Post post = postRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        boolean isLike;
+
+        if (post.getLikes().contains(user)) {
+            post.getLikes().remove(user);
+            isLike = false;
+        } else {
+            post.getLikes().add(user);
+            isLike = true;
+        }
+        postRepository.save(post);
+
+        return isLike;
+    }
 }

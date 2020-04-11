@@ -47,4 +47,8 @@ public class PostApiController {
         return postService.delete(id);
     }
 
+    @ApiOperation(value = "포스트 좋아요 API")
+    @PostMapping("api/v1/post/{id}/like")
+    public boolean postLike(@PathVariable Long id) { return postService.like(id);}
+
 }

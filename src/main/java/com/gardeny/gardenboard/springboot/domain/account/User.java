@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gardeny.gardenboard.springboot.domain.BaseTimeEntity;
 import com.gardeny.gardenboard.springboot.domain.contents.Post;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
+@EqualsAndHashCode(of = "username", callSuper = false)
 @Entity
 public class User extends BaseTimeEntity implements UserDetails {
 

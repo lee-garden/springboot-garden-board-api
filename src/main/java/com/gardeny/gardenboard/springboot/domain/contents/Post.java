@@ -32,7 +32,7 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private User user;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "users_like",
         joinColumns = @JoinColumn(name = "post_id"),

@@ -16,7 +16,7 @@ public class PostListResponseDto {
     private String user;
     private Category category;
     private String content;
-    private boolean isRemoved;
+    private Integer likes;
     private LocalDateTime created;
 
     public PostListResponseDto(Post entity) {
@@ -26,7 +26,7 @@ public class PostListResponseDto {
         this.user = entity.getUser().getName();
         this.category = entity.getCategory();
         this.content = entity.getContent();
+        this.likes = entity.getLikes().size();
         this.created = entity.getCreated();
-        this.isRemoved = entity.isRemoved();
     }
 }

@@ -5,6 +5,7 @@ import com.gardeny.gardenboard.springboot.domain.account.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -39,6 +40,9 @@ public class Post extends BaseTimeEntity {
         inverseJoinColumns = @JoinColumn(name = "user_id"))
     Set<User> likes;
 
+    @Column(columnDefinition = "boolean default true", nullable = false)
+    private boolean isRemoved;
+
     @Builder
     public Post(Category category, String title, String content, User user) {
         this.category = category;
@@ -50,5 +54,9 @@ public class Post extends BaseTimeEntity {
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void delete() {
+        this.isRemoved = true;
     }
 }

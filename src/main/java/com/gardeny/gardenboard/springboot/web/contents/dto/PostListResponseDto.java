@@ -16,6 +16,7 @@ public class PostListResponseDto {
     private String user;
     private Category category;
     private String content;
+    private boolean isRemoved;
     private LocalDateTime created;
 
     public PostListResponseDto(Post entity) {
@@ -26,5 +27,6 @@ public class PostListResponseDto {
         this.category = entity.getCategory();
         this.content = entity.getContent();
         this.created = entity.getCreated();
+        this.isRemoved = entity.isRemoved();
     }
 }

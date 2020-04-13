@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Query("SELECT p FROM Post p ORDER BY p.id DESC")
-    List<Post> findAllDesc();
+//    @Query("SELECT p FROM Post p WHERE p.isRemoved = false ORDER BY p.id DESC")
+    List<Post> findAllByIsRemovedFalseOrderByIdDesc();
 
-    List<Post> findByUser_idOrderByCreatedDesc(@Param("user_id") Long user_id);
+    List<Post> findByUser_idAndIsRemovedFalseOrderByCreatedDesc(@Param("user_id") Long user_id);
 }

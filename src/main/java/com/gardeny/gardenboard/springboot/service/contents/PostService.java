@@ -30,7 +30,7 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public List<PostListResponseDto> findAllDesc() {
-        return postRepository.findAllDesc().stream()
+        return postRepository.findAllByIsRemovedFalseOrderByIdDesc().stream()
                 .map(PostListResponseDto::new)
                 .collect(Collectors.toList());
     }
@@ -38,7 +38,7 @@ public class PostService {
     @Transactional(readOnly = true)
     public List<PostListResponseDto> findMyPost() {
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return postRepository.findByUser_idOrderByCreatedDesc(user.getId()).stream()
+        return postRepository.findByUser_idAndIsRemovedFalseOrderByCreatedDesc(user.getId()).stream()
                 .map(PostListResponseDto::new)
                 .collect(Collectors.toList());
     }
@@ -56,7 +56,8 @@ public class PostService {
     public Long delete(Long id) {
         Post post = postRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
-        // todo : is_removed True 처리
+        post.delete();
+        postRepository.save(post);
 
         return post.getId();
     }

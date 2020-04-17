@@ -4,6 +4,7 @@ import com.gardeny.gardenboard.springboot.domain.account.User;
 import com.gardeny.gardenboard.springboot.domain.contents.Post;
 import com.gardeny.gardenboard.springboot.domain.contents.PostRepository;
 import com.gardeny.gardenboard.springboot.web.contents.dto.PostListResponseDto;
+import com.gardeny.gardenboard.springboot.web.contents.dto.PostRetrieveResponseDto;
 import com.gardeny.gardenboard.springboot.web.contents.dto.PostSaveRequestDto;
 import com.gardeny.gardenboard.springboot.web.contents.dto.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -42,10 +43,15 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public PostRetrieveResponseDto postRetrieve(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return new PostRetrieveResponseDto(post);
+    }
+
     @Transactional
     public Long update(Long id, PostUpdateRequestDto requestDto) {
         Post post = postRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-
         post.update(requestDto.getTitle(), requestDto.getContent());
 
         return post.getId();

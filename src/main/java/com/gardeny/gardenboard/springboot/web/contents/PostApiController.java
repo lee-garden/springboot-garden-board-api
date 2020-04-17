@@ -2,6 +2,7 @@ package com.gardeny.gardenboard.springboot.web.contents;
 
 import com.gardeny.gardenboard.springboot.service.contents.PostService;
 import com.gardeny.gardenboard.springboot.web.contents.dto.PostListResponseDto;
+import com.gardeny.gardenboard.springboot.web.contents.dto.PostRetrieveResponseDto;
 import com.gardeny.gardenboard.springboot.web.contents.dto.PostSaveRequestDto;
 import com.gardeny.gardenboard.springboot.web.contents.dto.PostUpdateRequestDto;
 import io.swagger.annotations.ApiOperation;
@@ -34,6 +35,10 @@ public class PostApiController {
     @ApiOperation(value = "내가 쓴 포스트 리스트 API")
     @GetMapping("/api/v1/post/my")
     public List<PostListResponseDto> myPostList() { return postService.findMyPost(); }
+
+    @ApiOperation(value = "포스트 디테일 API")
+    @GetMapping("/api/v1/post/{id}")
+    public PostRetrieveResponseDto postRetrieve(@PathVariable Long id) {return postService.postRetrieve(id); }
 
     @ApiOperation(value = "포스트 수정 API")
     @PutMapping("api/v1/post/{id}")

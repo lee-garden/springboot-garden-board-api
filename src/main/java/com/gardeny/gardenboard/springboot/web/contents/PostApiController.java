@@ -1,10 +1,7 @@
 package com.gardeny.gardenboard.springboot.web.contents;
 
 import com.gardeny.gardenboard.springboot.service.contents.PostService;
-import com.gardeny.gardenboard.springboot.web.contents.dto.PostListResponseDto;
-import com.gardeny.gardenboard.springboot.web.contents.dto.PostRetrieveResponseDto;
-import com.gardeny.gardenboard.springboot.web.contents.dto.PostSaveRequestDto;
-import com.gardeny.gardenboard.springboot.web.contents.dto.PostUpdateRequestDto;
+import com.gardeny.gardenboard.springboot.web.contents.dto.*;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -55,5 +52,11 @@ public class PostApiController {
     @ApiOperation(value = "포스트 좋아요 API")
     @PostMapping("api/v1/post/{id}/like")
     public boolean postLike(@PathVariable Long id) { return postService.like(id);}
+
+    @ApiOperation(value = "포스트 댓글 API")
+    @PostMapping("api/v1/post/{id}/comment")
+    public Long createComment(@PathVariable Long id, @RequestBody CommentSaveRequestDto requestDto) {
+        return postService.createComment(id, requestDto);
+    }
 
 }

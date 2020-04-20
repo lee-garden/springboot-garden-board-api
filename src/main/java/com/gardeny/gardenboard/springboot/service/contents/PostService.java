@@ -1,12 +1,10 @@
 package com.gardeny.gardenboard.springboot.service.contents;
 
 import com.gardeny.gardenboard.springboot.domain.account.User;
+import com.gardeny.gardenboard.springboot.domain.comment.CommentRepository;
 import com.gardeny.gardenboard.springboot.domain.contents.Post;
 import com.gardeny.gardenboard.springboot.domain.contents.PostRepository;
-import com.gardeny.gardenboard.springboot.web.contents.dto.PostListResponseDto;
-import com.gardeny.gardenboard.springboot.web.contents.dto.PostRetrieveResponseDto;
-import com.gardeny.gardenboard.springboot.web.contents.dto.PostSaveRequestDto;
-import com.gardeny.gardenboard.springboot.web.contents.dto.PostUpdateRequestDto;
+import com.gardeny.gardenboard.springboot.web.contents.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -20,6 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class PostService {
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
 
     @Transactional
     public Long save(PostSaveRequestDto requestDto) {
@@ -83,5 +82,16 @@ public class PostService {
         postRepository.save(post);
 
         return isLike;
+    }
+
+    @Transactional
+    public Long createComment(Long id, CommentSaveRequestDto requestDto) {
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Post post = postRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+
+        requestDto.setUser(user);
+        requestDto.setPost(post);
+
+        return commentRepository.save(requestDto.toEntity()).getId();
     }
 }

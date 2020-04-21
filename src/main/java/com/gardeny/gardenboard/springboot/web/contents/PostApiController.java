@@ -59,4 +59,10 @@ public class PostApiController {
         return postService.createComment(id, requestDto);
     }
 
+    @ApiOperation(value = "포스트 댓글 리스트 API")
+    @GetMapping("api/v1/post/{id}/comments")
+    public List<CommentListResponseDto> getComments(@PathVariable Long id) {
+        return postService.getComments(id);
+    }
+
 }

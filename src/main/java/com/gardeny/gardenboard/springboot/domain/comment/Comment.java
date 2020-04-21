@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -31,7 +31,7 @@ public class Comment {
     private Comment parentComment;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parentComment")
-    private Set<Comment> children;
+    private List<Comment> children;
 
     @Column(length = 500, nullable = false)
     private String content;

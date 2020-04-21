@@ -94,4 +94,11 @@ public class PostService {
 
         return commentRepository.save(requestDto.toEntity()).getId();
     }
+
+    @Transactional(readOnly = true)
+    public List<CommentListResponseDto> getComments(Long id) {
+        return commentRepository.findComments(id).stream()
+                .map(CommentListResponseDto::new)
+                .collect(Collectors.toList());
+    }
 }

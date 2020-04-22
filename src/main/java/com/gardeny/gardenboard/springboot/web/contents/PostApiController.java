@@ -5,6 +5,7 @@ import com.gardeny.gardenboard.springboot.web.contents.dto.*;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +26,8 @@ public class PostApiController {
 
     @ApiOperation(value = "포스트 리스트 API")
     @GetMapping("/api/v1/post")
-    public List<PostListResponseDto> postList() {
-        return postService.findAllDesc();
+    public List<PostListResponseDto> postList(Pageable pageable) {
+        return postService.findAllDesc(pageable);
     }
 
     @ApiOperation(value = "내가 쓴 포스트 리스트 API")

@@ -6,6 +6,7 @@ import com.gardeny.gardenboard.springboot.domain.contents.Post;
 import com.gardeny.gardenboard.springboot.domain.contents.PostRepository;
 import com.gardeny.gardenboard.springboot.web.contents.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,8 +29,8 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<PostListResponseDto> findAllDesc() {
-        return postRepository.findAllByIsRemovedFalseOrderByIdDesc().stream()
+    public List<PostListResponseDto> findAllDesc(Pageable pageable) {
+        return postRepository.findAllByIsRemovedFalseOrderByIdDesc(pageable).stream()
                 .map(PostListResponseDto::new)
                 .collect(Collectors.toList());
     }
